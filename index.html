@@ -13,9 +13,32 @@
 </head>
 <body>
 
+  <style>
+      #menu {
+          position: absolute;
+          background: #fff;
+          padding: 10px;
+          font-family: 'Open Sans', sans-serif;
+      }
+  </style>
+
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
 <div id='map'></div>
+<div id='menu'>
+    <input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
+    <label for='basic'>basic</label>
+    <input id='streets' type='radio' name='rtoggle' value='streets'>
+    <label for='streets'>streets</label>
+    <input id='bright' type='radio' name='rtoggle' value='bright'>
+    <label for='bright'>bright</label>
+    <input id='light' type='radio' name='rtoggle' value='light'>
+    <label for='light'>light</label>
+    <input id='dark' type='radio' name='rtoggle' value='dark'>
+    <label for='dark'>dark</label>
+    <input id='satellite' type='radio' name='rtoggle' value='satellite'>
+    <label for='satellite'>satellite</label>
+</div>
 
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg';
@@ -31,6 +54,18 @@ map.addControl(new mapboxgl.NavigationControl());
 map.addControl(new MapboxGeocoder({
     accessToken: mapboxgl.accessToken
 }));
+
+var layerList = document.getElementById('menu');
+var inputs = layerList.getElementsByTagName('input');
+
+function switchLayer(layer) {
+    var layerId = layer.target.id;
+    map.setStyle('mapbox://styles/mapbox/' + layerId + '-v9');
+}
+
+for (var i = 0; i < inputs.length; i++) {
+    inputs[i].onclick = switchLayer;
+}
 </script>
 
 </body>
