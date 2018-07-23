@@ -54,12 +54,6 @@ var map = new mapboxgl.Map({
     zoom: 9 // starting zoom
 });
 
-// Add zoom and rotation controls to the map.
-map.addControl(new mapboxgl.NavigationControl());
-map.addControl(new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken
-}));
-
 // The 'building' layer in the mapbox-streets vector source contains building-height
 // data from OpenStreetMap.
 map.on('load', function() {
@@ -100,10 +94,15 @@ map.on('load', function() {
         }
     }, labelLayerId);
 });
-
 map.addControl(new MapboxDirections({
     accessToken: mapboxgl.accessToken
 }), 'top-left');
+
+// Add zoom and rotation controls to the map.
+map.addControl(new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+}));
+map.addControl(new mapboxgl.NavigationControl());
 
 var layerList = document.getElementById('menu');
 var inputs = layerList.getElementsByTagName('input');
